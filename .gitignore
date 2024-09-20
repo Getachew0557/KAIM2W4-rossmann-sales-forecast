@@ -1,3 +1,6 @@
-myenve/*
 data/*
-.enve
+myenve
+myenve/*
+.venv
+__pycache__
+__pycache__/*
