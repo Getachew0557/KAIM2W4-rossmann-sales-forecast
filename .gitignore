@@ -1,4 +1,6 @@
-myenve/*
 data/*
-.enve
-notebook/clean_data.csv
+myenve
+myenve/*
+.venv
+__pycache__
+__pycache__/*
