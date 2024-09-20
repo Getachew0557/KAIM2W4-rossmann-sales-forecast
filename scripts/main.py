@@ -107,15 +107,26 @@ def main():
     # Correlation analysis
     plot_sales_customers_corr() 
 
-    # Correlation analysis between features
-    plt.figure(figsize=(12, 8))
-    sns.heatmap(store_data.corr(), annot=True, cmap='coolwarm')
-    plt.title("Correlation between features")
-    plt.show()
+    # Create a label encoder instance
+    label_encoder = LabelEncoder()
+
+    # Convert 'StoreType', 'Assortment', and 'PromoInterval' from strings to numeric codes
+    store_data['StoreType'] = label_encoder.fit_transform(store_data['StoreType'])
+    store_data['Assortment'] = label_encoder.fit_transform(store_data['Assortment'])
+
+    # For 'PromoInterval', first replace missing values with 'None', then apply label encoding
+    store_data['PromoInterval'].fillna('None', inplace=True)
+    store_data['PromoInterval'] = label_encoder.fit_transform(store_data['PromoInterval'])
+
+    # Now check the correlation
+    correlation_matrix = store_data.corr()
+
+    # Display correlation matrix
+    correlation_matrix
 
     # Promo Effects
     promo_effect(merged_data)
 
 
-
-
+if __name__ == "__main__":
+    main()
