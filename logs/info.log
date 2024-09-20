@@ -130,3 +130,8 @@ Stores open on all weekdays: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
 Assortment impact plot saved as assortment_impact.png
 Competitor distance impact plot saved as competitor_distance_impact.png
 New competitor effects plot saved as new_competitor_effects.png
+Data loaded successfully from ../data/train.csv
+Data loaded successfully from ../data/test.csv
+Data loaded successfully from ../data/store.csv
+Data cleaned successfully
+Data cleaned successfully
