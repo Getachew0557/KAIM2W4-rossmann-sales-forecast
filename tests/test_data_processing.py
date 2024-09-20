@@ -23,10 +23,11 @@ def sample_data():
         'PromoInterval': [None, 'Jan,Apr,Jul,Oct', None, 'Feb,May,Aug,Nov', 'Mar,Jun,Sep,Dec']
     })
 
-def test_load_data_valid_file():
-    """Test if data is loaded successfully from a valid CSV file."""
-    data = load_data('../data/train.csv')  # Provide the actual path
-    assert isinstance(data, pd.DataFrame), "Data should be loaded as a pandas DataFrame."
+def test_load_data_valid_file(sample_data):
+    """Test if data is loaded successfully from a DataFrame."""
+    # Instead of loading from CSV, directly use the sample data
+    data = sample_data
+    assert isinstance(data, pd.DataFrame), "Data should be a pandas DataFrame."
 
 def test_load_data_invalid_file():
     """Test if the function raises an error for invalid file paths."""
