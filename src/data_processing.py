@@ -36,3 +36,18 @@ def detect_outliers(data, column):
     outliers = data[(data[column] < lower_bound) | (data[column] > upper_bound)]
     info_logger.info(f'Detected {len(outliers)} outliers in {column}')
     return outliers
+
+def handle_missing_values(merged_data):
+    """ Handle missing values in the merged dataset """
+    try:
+        merged_data['CompetitionDistance'].fillna(merged_data['CompetitionDistance'].median(), inplace=True)
+        merged_data['CompetitionOpenSinceMonth'].fillna(merged_data['CompetitionOpenSinceMonth'].mode()[0], inplace=True)
+        merged_data['CompetitionOpenSinceYear'].fillna(merged_data['CompetitionOpenSinceYear'].mode()[0], inplace=True)
+        merged_data['Promo2SinceWeek'].fillna(merged_data['Promo2SinceWeek'].mode()[0], inplace=True)
+        merged_data['Promo2SinceYear'].fillna(merged_data['Promo2SinceYear'].mode()[0], inplace=True)
+        merged_data['PromoInterval'].fillna('None', inplace=True)
+        logging.info('Missing values handled successfully')
+    except Exception as e:
+        logging.error(f"Error handling missing values: {str(e)}")
+        raise e
+    return merged_data

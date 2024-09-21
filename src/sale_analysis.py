@@ -1,4 +1,5 @@
 import os
+import sys
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -10,6 +11,8 @@ from custom_logging import info_logger, error_logger
 import matplotlib.pyplot as plt
 import seaborn as sns
 import logging
+sys.path.append(os.path.abspath('../data'))
+from data_processing import load_data
 
 # Initialize logger
 logging.basicConfig(level=logging.INFO)
@@ -20,6 +23,10 @@ plots_dir = os.path.join(os.path.dirname(__file__), '../notebook/plots')
 if not os.path.exists(plots_dir):
     os.makedirs(plots_dir)
 
+# Load datasets
+train_data = load_data('../data/train.csv')
+test_data = load_data('../data/test.csv')
+store_data = load_data('../data/store.csv')
 
 def plot_sales_distribution(data_train, data_test):
     """ Compare sales distribution between training and test sets if available. """
@@ -82,6 +89,41 @@ def correlation_analysis(data):
     plt.ylabel('Sales')
     plt.savefig(os.path.join(plots_dir,'sales_customers_correlation.png'))
     info_logger.info('Sales vs Customers correlation plot saved as sales_customers_correlation.png')
+
+def plot_promo_distribution():
+    """Promo distribution in train vs test sets."""
+    plt.figure(figsize=(10, 6))
+    sns.histplot(train_data['Promo'], color='blue', label='Train', kde=True, bins=30)
+    sns.histplot(test_data['Promo'], color='green', label='Test', kde=True, bins=30)
+    plt.title('Promo Distribution: Training vs Test Set')
+    plt.legend()
+    plt.savefig(os.path.join(plots_dir, 'promo_distribution.png'))
+    plt.show()
+
+def plot_sales_during_holidays():
+    """Analyze sales behavior during holidays."""
+    holiday_sales = merged_data.groupby(['StateHoliday', 'Date']).agg({'Sales': 'mean'}).reset_index()
+    sns.lineplot(x='Date', y='Sales', hue='StateHoliday', data=holiday_sales)
+    plt.title('Sales Behavior During Holidays')
+    plt.savefig(os.path.join(plots_dir, 'sales_during_holidays.png'))
+    plt.show()
+
+def plot_sales_customers_corr():
+    """Correlation between sales and customers."""
+    correlation = train_data[['Sales', 'Customers']].corr()
+    sns.heatmap(correlation, annot=True, cmap='coolwarm')
+    plt.title('Correlation between Sales and Customers')
+    plt.savefig(os.path.join(plots_dir, 'sales_customers_corr.png'))
+    plt.show()
+
+def plot_store_corr():
+    """Correlation matrix for store data."""
+    correlation_matrix = store_data.corr()
+    plt.figure(figsize=(12, 8))
+    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+    plt.title("Correlation between features")
+    plt.savefig(os.path.join(plots_dir, 'store_feature_correlation.png'))
+    plt.show()
 
 def promo_effect(data):
     """ Analyze the effect of promos on sales. """
