@@ -4,3 +4,7 @@ myenve/*
 .venv
 __pycache__
 __pycache__/*
+<<<<<<< HEAD
+=======
+notebook/models/*
+>>>>>>> 2bb416d (Re-initialize repository with current changes)

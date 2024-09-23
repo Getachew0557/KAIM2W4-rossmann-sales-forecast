@@ -13,3 +13,8 @@ File not found: invalid/path/to/file.csv
 File not found: invalid/path/to/file.csv
 File not found: invalid/path/to/file.csv
 File not found: invalid/path/to/file.csv
+<<<<<<< HEAD
+=======
+File not found: invalid/path/to/file.csv
+File not found: invalid/path/to/file.csv
+>>>>>>> 2bb416d (Re-initialize repository with current changes)

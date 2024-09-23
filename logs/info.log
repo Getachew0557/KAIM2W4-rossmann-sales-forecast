@@ -208,3 +208,12 @@ C:\Users\getac\Documents\10 Academy\week 4\KAIMW4\src\../notebook/plots\Seasonal
 Correlation between Sales and Customers: 0.894710773301837
 Sales vs Customers correlation plot saved as sales_customers_correlation.png
 Promo effect plot saved as promo_effect.png
+<<<<<<< HEAD
+=======
+Data loaded successfully from ../data/train.csv
+Data loaded successfully from ../data/test.csv
+Data loaded successfully from ../data/store.csv
+Data loaded successfully from ../data/train.csv
+Data loaded successfully from ../data/test.csv
+Data loaded successfully from ../data/store.csv
+>>>>>>> 2bb416d (Re-initialize repository with current changes)
