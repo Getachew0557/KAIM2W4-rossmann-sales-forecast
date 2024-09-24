@@ -38,8 +38,8 @@ from sale_analysis import (
     plot_store_corr
 )
 from preprocessing import load_data, merge_data, feature_engineering
-from modeling import train_models
-from evaluation import evaluate_model
+from modeling import train_models, train_lstm_model
+from evaluation import evaluate_model, evaluate_lstm_model, plot_rf_confidence_interval
 from serialization import save_model
 
 def main():
@@ -152,15 +152,29 @@ def main():
     mse_rf, mae_rf, r2_rf = evaluate_model(y_test, y_pred_rf)
     logging.info(f"Random Forest - MSE: {mse_rf}, MAE: {mae_rf}, R2: {r2_rf}")
 
+        # Plot confidence intervals for Random Forest predictions
+    plot_rf_confidence_interval(rf_model, X_test, y_test, y_pred_rf)
+
     logging.info("Evaluating XGBoost Model")
     y_pred_xgb = xgb_model.predict(X_test)
     mse_xgb, mae_xgb, r2_xgb = evaluate_model(y_test, y_pred_xgb)
     logging.info(f"XGBoost - MSE: {mse_xgb}, MAE: {mae_xgb}, R2: {r2_xgb}")
 
+    #  LSTM Modeling
+    logging.info("Task 3: Starting LSTM Model Training and Evaluation")
+    
+    df = feature_engineered_data
+    lstm_model, y_test_lstm_rescaled, y_pred_lstm_rescaled = train_lstm_model(df)
+
+    # Evaluate LSTM model
+    evaluate_lstm_model(y_test_lstm_rescaled, y_pred_lstm_rescaled)
+
+
     # Save Models
     logging.info("Task 2: Saving Models")
     save_model(rf_model, 'random_forest_model')
     save_model(xgb_model, 'xgboost_model')
+    save_model(lstm_model, 'lstm_model')
 
     logging.info("Main pipeline completed successfully.")
 
