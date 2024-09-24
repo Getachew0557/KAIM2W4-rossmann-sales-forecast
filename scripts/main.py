@@ -37,12 +37,14 @@ from sale_analysis import (
     plot_sales_customers_corr, 
     plot_store_corr
 )
+from preprocessing import load_data, merge_data, feature_engineering
+from modeling import train_models, train_lstm_model
+from evaluation import evaluate_model, evaluate_lstm_model, plot_rf_confidence_interval
+from serialization import save_model
 
 def main():
     # Load datasets
-    train_data = load_data('../data/train.csv')
-    test_data = load_data('../data/test.csv')
-    store_data = load_data('../data/store.csv')
+    train_data, test_data, store_data = load_data('../data/train.csv', '../data/test.csv', '../data/store.csv')
 
     print("Training Data", train_data.head())
     print("Training Data", test_data.head())
@@ -126,6 +128,55 @@ def main():
 
     # Promo Effects
     promo_effect(merged_data)
+    
+   #merge whole data
+    merged_data = merge_data(train_data, test_data, store_data)
+
+    # Clean datasets
+    cleaned_data = clean_data(merged_data)
+
+    # Handle missing values
+    cleaned_data = handle_missing_values(cleaned_data)
+
+    # Feature Engineering
+    feature_engineered_data = feature_engineering(cleaned_data)
+
+    logging.info("Task 2: Starting Model Training and Evaluation")
+    
+    # Train models (Random Forest, XGBoost)
+    rf_model, xgb_model, X_test, y_test = train_models(feature_engineered_data)
+
+    # Evaluate models
+    logging.info("Evaluating Random Forest Model")
+    y_pred_rf = rf_model.predict(X_test)
+    mse_rf, mae_rf, r2_rf = evaluate_model(y_test, y_pred_rf)
+    logging.info(f"Random Forest - MSE: {mse_rf}, MAE: {mae_rf}, R2: {r2_rf}")
+
+        # Plot confidence intervals for Random Forest predictions
+    plot_rf_confidence_interval(rf_model, X_test, y_test, y_pred_rf)
+
+    logging.info("Evaluating XGBoost Model")
+    y_pred_xgb = xgb_model.predict(X_test)
+    mse_xgb, mae_xgb, r2_xgb = evaluate_model(y_test, y_pred_xgb)
+    logging.info(f"XGBoost - MSE: {mse_xgb}, MAE: {mae_xgb}, R2: {r2_xgb}")
+
+    #  LSTM Modeling
+    logging.info("Task 3: Starting LSTM Model Training and Evaluation")
+    
+    df = feature_engineered_data
+    lstm_model, y_test_lstm_rescaled, y_pred_lstm_rescaled = train_lstm_model(df)
+
+    # Evaluate LSTM model
+    evaluate_lstm_model(y_test_lstm_rescaled, y_pred_lstm_rescaled)
+
+
+    # Save Models
+    logging.info("Task 2: Saving Models")
+    save_model(rf_model, 'random_forest_model')
+    save_model(xgb_model, 'xgboost_model')
+    save_model(lstm_model, 'lstm_model')
+
+    logging.info("Main pipeline completed successfully.")
 
 
 if __name__ == "__main__":
