@@ -6,3 +6,5 @@ seaborn
 pmdarima
 statsmodels
 pytest
+fastapi
+uvicorn
