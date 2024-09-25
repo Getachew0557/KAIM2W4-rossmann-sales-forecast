@@ -2,10 +2,7 @@ import os
 import logging
 import pandas as pd
 import numpy as np
-<<<<<<< HEAD
-=======
 from sklearn.preprocessing import StandardScaler
->>>>>>> 2bb416d (Re-initialize repository with current changes)
 
 # Ensure the 'logs' directory exists
 log_dir = os.path.join(os.path.dirname(__file__), '../logs')
@@ -54,9 +51,6 @@ def handle_missing_values(merged_data):
     except Exception as e:
         logging.error(f"Error handling missing values: {str(e)}")
         raise e
-<<<<<<< HEAD
-    return merged_data
-=======
     return merged_data
 
 def extract_features(data):
@@ -82,4 +76,3 @@ def scale_data(data):
 
     info_logger.info('Data scaled successfully.')
     return scaled_df
->>>>>>> 2bb416d (Re-initialize repository with current changes)

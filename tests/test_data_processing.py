@@ -3,8 +3,8 @@ import sys
 import pytest
 import pandas as pd
 
-sys.path.append(os.path.abspath('../src'))
-sys.path.append(os.path.abspath('../data'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'data'))
 
 from data_processing import load_data, clean_data, handle_missing_values
 
