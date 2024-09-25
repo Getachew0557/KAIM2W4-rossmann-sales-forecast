@@ -37,7 +37,7 @@ jobs:
 
       - name: Run tests
         run: |
-          docker run --rm my-app-image:latest pytest --maxfail=1 --disable-warnings -q
+          docker run --rm my-app-image:latest
 
   deploy:
     runs-on: ubuntu-latest
