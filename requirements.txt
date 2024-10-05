@@ -8,3 +8,4 @@ statsmodels
 pytest
 fastapi
 uvicorn
+flask
