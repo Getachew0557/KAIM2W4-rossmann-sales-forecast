@@ -2,3 +2,7 @@ Flask
 pandas
 numpy
 scikit-learn
+joblib
+gdown
+xgboost
+gunicorn
