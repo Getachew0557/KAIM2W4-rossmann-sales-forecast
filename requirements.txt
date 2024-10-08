@@ -9,3 +9,7 @@ pytest
 fastapi
 uvicorn
 flask
+joblib
+gdown
+xgboost
+gunicorn
